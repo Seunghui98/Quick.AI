@@ -34,6 +34,7 @@
 #include "gemma3_causallm.h"
 #include "gptoss_cached_slim_causallm.h"
 #include "gptoss_causallm.h"
+#include "multilingual_tinybert_16mb.h"
 #include "qwen2_causallm.h"
 #include "qwen2_embedding.h"
 #include "qwen3_cached_slim_moe_causallm.h"
@@ -120,6 +121,9 @@ std::string resolve_architecture(std::string model_type,
       return "EmbeddingGemma";
     } else if (architecture == "Qwen2Model") {
       return "Qwen2Embedding";
+    } else if (architecture == "BertModel" ||
+               architecture == "BertForMaskedLM") {
+      return "MultilingualTinyBert";
     } else {
       throw std::invalid_argument(
         "Unsupported architecture for embedding model: " + architecture);
@@ -196,6 +200,11 @@ int main(int argc, char *argv[]) {
     "EmbeddingGemma", [](json cfg, json generation_cfg, json nntr_cfg) {
       return std::make_unique<quick_dot_ai::EmbeddingGemma>(cfg, generation_cfg,
                                                         nntr_cfg);
+    });
+  quick_dot_ai::Factory::Instance().registerModel(
+    "MultilingualTinyBert", [](json cfg, json generation_cfg, json nntr_cfg) {
+      return std::make_unique<quick_dot_ai::MultilingualTinyBert>(
+        cfg, generation_cfg, nntr_cfg);
     });
 
   // Validate arguments
