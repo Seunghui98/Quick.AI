@@ -62,6 +62,8 @@ quick_dot_ai_layer_dependencies += [
     quick_dot_ai_qkv_layer_dep,
     quick_dot_ai_embedding_pooling_layer_dep,
     quick_dot_ai_embedding_normalize_layer_dep,
+    quick_dot_ai_deberta_attention_layer_dep,
+    quick_dot_ai_shared_fully_connected_layer_dep,
 ]
 
 subdir('models')
