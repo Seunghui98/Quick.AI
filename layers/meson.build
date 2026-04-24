@@ -11,6 +11,8 @@ quick_dot_ai_reshaped_rms_norm_src_abs = [meson.current_source_dir() / 'reshaped
 quick_dot_ai_qkv_layer_src_abs = [meson.current_source_dir() / 'qkv_layer.cpp']
 quick_dot_ai_embedding_pooling_src_abs = [meson.current_source_dir() / 'embedding_pooling_layer.cpp']
 quick_dot_ai_embedding_normalize_src_abs = [meson.current_source_dir() / 'embedding_normalize_layer.cpp']
+quick_dot_ai_deberta_attention_src_abs = [meson.current_source_dir() / 'deberta_attention_layer.cpp']
+quick_dot_ai_shared_fully_connected_src_abs = [meson.current_source_dir() / 'shared_fully_connected_layer.cpp']
 
 openmp_dep = dependency('openmp')
 quick_dot_ai_rms_norm = shared_library(
@@ -142,5 +144,33 @@ quick_dot_ai_qkv_layer = shared_library(
 
 quick_dot_ai_qkv_layer_dep = declare_dependency(
     link_with: quick_dot_ai_qkv_layer,
+    include_directories: quick_dot_ai_layer_inc
+)
+
+quick_dot_ai_deberta_attention_layer = shared_library(
+    'deberta_attention_layer',
+    quick_dot_ai_deberta_attention_src_abs,
+    include_directories: quick_dot_ai_layer_inc,
+    dependencies: [nntrainer_dep, nntrainer_ccapi_dep],
+    install: true,
+    install_dir: application_install_dir
+)
+
+quick_dot_ai_deberta_attention_layer_dep = declare_dependency(
+    link_with: quick_dot_ai_deberta_attention_layer,
+    include_directories: quick_dot_ai_layer_inc
+)
+
+quick_dot_ai_shared_fully_connected_layer = shared_library(
+    'shared_fully_connected_layer',
+    quick_dot_ai_shared_fully_connected_src_abs,
+    include_directories: quick_dot_ai_layer_inc,
+    dependencies: [nntrainer_dep, nntrainer_ccapi_dep],
+    install: true,
+    install_dir: application_install_dir
+)
+
+quick_dot_ai_shared_fully_connected_layer_dep = declare_dependency(
+    link_with: quick_dot_ai_shared_fully_connected_layer,
     include_directories: quick_dot_ai_layer_inc
 )
