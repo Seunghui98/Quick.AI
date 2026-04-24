@@ -6,6 +6,7 @@ quick_dot_ai_src += [
 
 quick_dot_ai_inc += include_directories('.')
 
+subdir('deberta_v2')
 subdir('gpt_oss')
 subdir('gpt_oss_cached_slim')
 subdir('qwen2')
